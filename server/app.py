@@ -75,12 +75,12 @@ class Logout(Resource):
 
 class CheckSession(Resource):
     def get(self):
-        user = User.query.filter(User.id == session.get("user_id")).first()
-        if user:
+        user_id =  session.get("user_id")
+        if user_id:
+            user = User.query.filter(User.id == session.get("user_id")).first()
             return make_response(user.to_dict(), 200)
         else:
-            response = {"message": "401: Not Authorized"}
-            return make_response(response, 401)
+            return make_response({}, 401)
 
 
 api.add_resource(ClearSession, "/clear")
